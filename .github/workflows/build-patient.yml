@@ -1,0 +1,59 @@
+name: Build Patient App
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'src/apps/patient/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'src/apps/patient/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/apps/patient
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.0"
+          cache: "pnpm"
+          
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v8
+        with:
+          token: ${{ secrets.EXPO_TOKEN }}
+          expo-version: latest
+          eas-version: latest
+          
+      - name: 🏗 Setup EAS local builds
+        run: pnpm add -g eas-cli-local-build-plugin
+        
+      - name: Install Dependencies
+        run: pnpm install
+          
+      - name: Run EAS Local Build (Android)
+        run: eas build --local --non-interactive --platform android --profile preview
+        
+      - name: Upload Android APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: patient-android-apk
+          path: src/apps/patient/android/app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: warn
+          retention-days: 30

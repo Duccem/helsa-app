@@ -60,7 +60,8 @@ The API is running at [http://localhost:3000](http://localhost:3000).
 helsa/
 ├── apps/
 │   ├── web/         # Frontend application (Next.js)
-│   ├── native/      # Mobile application (React Native, Expo)
+│   ├── patient/     # Mobile application for patients (React Native, Expo)
+│   ├── therapist/   # Mobile application for therapists (React Native, Expo)
 │   └── server/      # Backend API (Next)
 ```
 
@@ -71,7 +72,8 @@ helsa/
 - `pnpm dev:web`: Start only the web application
 - `pnpm dev:server`: Start only the server
 - `pnpm check-types`: Check TypeScript types across all apps
-- `pnpm dev:native`: Start the React Native/Expo development server
+- `pnpm dev:patient`: Start the patient React Native/Expo development server
+- `pnpm dev:therapist`: Start the therapist React Native/Expo development server
 - `pnpm db:push`: Push schema changes to database
 - `pnpm db:studio`: Open database studio UI
 - `pnpm check`: Run Biome formatting and linting

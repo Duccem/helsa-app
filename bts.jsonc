@@ -11,7 +11,8 @@
   "runtime": "node",
   "frontend": [
     "next",
-    "native-nativewind"
+    "patient-nativewind",
+    "therapist-nativewind"
   ],
   "addons": [
     "biome",

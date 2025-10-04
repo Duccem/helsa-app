@@ -1,0 +1,114 @@
+{
+  // TypeScript settings
+  "typescript.preferences.quoteStyle": "double",
+  "typescript.preferences.importModuleSpecifier": "shortest",
+  "typescript.suggest.autoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  
+  // JavaScript/TypeScript formatting
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "quickfix.biome": "explicit",
+    "source.organizeImports.biome": "explicit",
+    "source.fixAll": "explicit"
+  },
+  
+  // File associations
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  
+  // Tailwind CSS settings
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  
+  // Exclude files from explorer
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+    "**/.expo": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.cache": true,
+    "**/coverage": true
+  },
+  
+  // Search exclude
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "**/dist": true,
+    "**/build": true,
+    "**/.next": true,
+    "**/.expo": true,
+    "**/coverage": true,
+    "**/.cache": true
+  },
+  
+  // File watching
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/.next/**": true,
+    "**/.expo/**": true,
+    "**/coverage/**": true,
+    "**/.cache/**": true
+  },
+  
+  // Terminal settings
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  
+  // Emmet settings
+  "emmet.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html",
+    "javascript": "html",
+    "javascriptreact": "html"
+  },
+  
+  // React Native / Expo specific
+  "react-native.packager.port": 8081,
+  
+  // Extension specific settings
+  "eslint.enable": false,
+  "prettier.enable": false,
+  
+  // Git settings
+  "git.ignoreLimitWarning": true,
+  
+  // Auto save
+  "files.autoSave": "onFocusChange",
+  
+  // Bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  
+  // IntelliSense
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": true
+  },
+  
+  // Word wrap
+  "editor.wordWrap": "on",
+  
+}
