@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 import { v7 } from "uuid";
 import { user } from "./auth";
+import { therapist } from "./therapist";
 
 export const patient_gender = pgEnum("patient_gender", [
 	"MAN",
@@ -110,6 +111,26 @@ export const medication = pgTable("medication", {
 	startDate: timestamp("start_date").notNull(),
 	endDate: timestamp("end_date"),
 	notes: text("notes"),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at")
+		.notNull()
+		.defaultNow()
+		.$onUpdate(() => new Date()),
+});
+
+export const therapy = pgTable("therapy", {
+	id: uuid("id").primaryKey().$defaultFn(v7),
+	patientId: uuid("patient_id")
+		.notNull()
+		.references(() => patient.id),
+	therapistId: uuid("therapist_id")
+		.notNull()
+		.references(() => therapist.id),
+	name: text("name").notNull(),
+	description: text("description"),
+	objective: text("objective").notNull(),
+	startDate: timestamp("start_date").notNull(),
+	endDate: timestamp("end_date"),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at")
 		.notNull()
