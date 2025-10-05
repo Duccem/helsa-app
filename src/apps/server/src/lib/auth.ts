@@ -26,6 +26,14 @@ export const auth = betterAuth<BetterAuthOptions>({
 	emailAndPassword: {
 		enabled: true,
 	},
+	socialProviders: {
+		google: {
+			enabled: true,
+			clientId: process.env.GOOGLE_CLIENT_ID ?? "",
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
+			redirectURI: `${process.env.BETTER_AUTH_URL}/api/v1/auth/callback/google`,
+		},
+	},
 	advanced: {
 		defaultCookieAttributes: {
 			sameSite: "none",
