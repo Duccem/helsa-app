@@ -1,5 +1,11 @@
 import { expo } from "@better-auth/expo";
-import { checkout, polar, portal, webhooks } from "@polar-sh/better-auth";
+import {
+	checkout,
+	polar,
+	portal,
+	usage,
+	webhooks,
+} from "@polar-sh/better-auth";
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { bearer } from "better-auth/plugins";
@@ -65,6 +71,7 @@ export const auth = betterAuth<BetterAuthOptions>({
 					secret: process.env.POLAR_WEBHOOK_SECRET || "",
 					onPayload: async (_payload: unknown) => {},
 				}),
+				usage(),
 			],
 		}),
 		expo(),
