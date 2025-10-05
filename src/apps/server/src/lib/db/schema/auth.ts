@@ -1,5 +1,6 @@
-import { pgTable, text, timestamp, boolean, serial } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, boolean, serial, pgEnum } from "drizzle-orm/pg-core";
 
+export const user_role = pgEnum("user_role", ["PATIENT", "THERAPIST"]);
 export const user = pgTable("user", {
 	id: text("id").primaryKey(),
 	name: text("name").notNull(),
@@ -8,6 +9,7 @@ export const user = pgTable("user", {
 	image: text("image"),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
+	role: user_role("role").notNull().default("PATIENT"),
 });
 
 export const session = pgTable("session", {
