@@ -1,8 +1,16 @@
-import { pgTable, text, timestamp, boolean, serial, pgEnum } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	pgEnum,
+	pgTable,
+	text,
+	timestamp,
+	uuid,
+} from "drizzle-orm/pg-core";
+import { v7 } from "uuid";
 
 export const user_role = pgEnum("user_role", ["PATIENT", "THERAPIST"]);
 export const user = pgTable("user", {
-	id: text("id").primaryKey(),
+	id: uuid("id").primaryKey().$defaultFn(v7),
 	name: text("name").notNull(),
 	email: text("email").notNull().unique(),
 	emailVerified: boolean("email_verified").notNull(),
@@ -13,7 +21,7 @@ export const user = pgTable("user", {
 });
 
 export const session = pgTable("session", {
-	id: text("id").primaryKey(),
+	id: uuid("id").primaryKey().$defaultFn(v7),
 	expiresAt: timestamp("expires_at").notNull(),
 	token: text("token").notNull().unique(),
 	createdAt: timestamp("created_at").notNull(),
@@ -26,7 +34,7 @@ export const session = pgTable("session", {
 });
 
 export const account = pgTable("account", {
-	id: text("id").primaryKey(),
+	id: uuid("id").primaryKey().$defaultFn(v7),
 	accountId: text("account_id").notNull(),
 	providerId: text("provider_id").notNull(),
 	userId: text("user_id")
@@ -44,7 +52,7 @@ export const account = pgTable("account", {
 });
 
 export const verification = pgTable("verification", {
-	id: text("id").primaryKey(),
+	id: uuid("id").primaryKey().$defaultFn(v7),
 	identifier: text("identifier").notNull(),
 	value: text("value").notNull(),
 	expiresAt: timestamp("expires_at").notNull(),
