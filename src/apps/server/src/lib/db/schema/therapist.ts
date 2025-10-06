@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
 	integer,
 	jsonb,
@@ -104,6 +105,7 @@ export const schedule_day = pgTable("schedule_day", {
 	scheduleId: uuid("schedule_id")
 		.notNull()
 		.references(() => schedule.id),
+
 	day: integer("day").default(1),
 	startHour: time("start_hour").notNull(),
 	endHour: time("end_hour").notNull(),
@@ -125,3 +127,72 @@ export const availability_slot = pgTable("availability_slot", {
 		.defaultNow()
 		.$onUpdate(() => new Date()),
 });
+
+export const therapist_relations = relations(therapist, ({ one }) => ({
+	schedule: one(schedule, {
+		fields: [therapist.id],
+		references: [schedule.therapistId],
+	}),
+	user: one(user, {
+		fields: [therapist.userId],
+		references: [user.id],
+	}),
+	specialty: one(specialty, {
+		fields: [therapist.specialtyId],
+		references: [specialty.id],
+	}),
+	office_address: one(office_address, {
+		fields: [therapist.id],
+		references: [office_address.therapistId],
+	}),
+	price: one(price, {
+		fields: [therapist.id],
+		references: [price.therapistId],
+	}),
+}));
+
+export const specialty_relations = relations(specialty, ({ many }) => ({
+	therapists: many(therapist),
+}));
+
+export const education_relations = relations(education, ({ one }) => ({
+	therapist: one(therapist, {
+		fields: [education.therapistId],
+		references: [therapist.id],
+	}),
+}));
+
+export const price_relations = relations(price, ({ one }) => ({
+	therapist: one(therapist, {
+		fields: [price.therapistId],
+		references: [therapist.id],
+	}),
+}));
+
+export const office_address_relations = relations(
+	office_address,
+	({ one }) => ({
+		therapist: one(therapist, {
+			fields: [office_address.therapistId],
+			references: [therapist.id],
+		}),
+	}),
+);
+
+export const availability_slot_relations = relations(
+	availability_slot,
+	({ one }) => ({
+		therapist: one(therapist, {
+			fields: [availability_slot.therapistId],
+			references: [therapist.id],
+		}),
+	}),
+);
+
+export const schedule_relations = relations(schedule, ({ many, one }) => ({
+	days: many(schedule_day),
+	therapist: one(therapist, {
+		fields: [schedule.therapistId],
+		references: [therapist.id],
+	}),
+}));

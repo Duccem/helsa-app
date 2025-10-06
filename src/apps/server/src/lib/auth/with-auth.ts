@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import type { ZodType } from "zod";
+import type { AppError } from "../error";
 import { type BetterSession, getSession } from "./auth";
 
 export type AuthHandlerContext<P, B, Q> = {
@@ -22,7 +23,7 @@ export type AuthenticatedHandlerOptions<P, B, Q> = {
 export const withAuth = async <P, B, Q>(
 	handler: AuthenticatedHandler<P, B, Q>,
 	options?: AuthenticatedHandlerOptions<P, B, Q>,
-	onError?: (error: Error) => NextResponse,
+	onError?: (error: AppError) => NextResponse,
 ) => {
 	return async (req: NextRequest, { params }: { params: Promise<P> }) => {
 		const session = await getSession();
@@ -48,7 +49,7 @@ export const withAuth = async <P, B, Q>(
 		} catch (error) {
 			console.error("Error in authenticated handler:", error);
 			if (onError) {
-				return onError(error as Error);
+				return onError(error as AppError);
 			}
 			return NextResponse.json(
 				{ error: "Internal Server Error" },
