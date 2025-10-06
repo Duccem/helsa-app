@@ -1,27 +1,17 @@
-import { Stack } from "expo-router";
 import {
 	DarkTheme,
 	DefaultTheme,
-	type Theme,
 	ThemeProvider,
 } from "@react-navigation/native";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
-import { NAV_THEME } from "@/lib/constants";
 import React, { useRef } from "react";
-import { useColorScheme } from "@/lib/use-color-scheme";
 import { Platform } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
-
-const LIGHT_THEME: Theme = {
-	...DefaultTheme,
-	colors: NAV_THEME.light,
-};
-const DARK_THEME: Theme = {
-	...DarkTheme,
-	colors: NAV_THEME.dark,
-};
+import { useColorScheme } from "@/lib/use-color-scheme";
 
 export const unstable_settings = {
 	initialRouteName: "(drawer)",
@@ -37,9 +27,6 @@ export default function RootLayout() {
 			return;
 		}
 
-		if (Platform.OS === "web") {
-			document.documentElement.classList.add("bg-background");
-		}
 		setAndroidNavigationBar(colorScheme);
 		setIsColorSchemeLoaded(true);
 		hasMounted.current = true;
@@ -49,17 +36,20 @@ export default function RootLayout() {
 		return null;
 	}
 	return (
-		<ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+		<ThemeProvider value={isDarkColorScheme ? DarkTheme : DefaultTheme}>
 			<StatusBar style={isDarkColorScheme ? "light" : "dark"} />
-			<GestureHandlerRootView style={{ flex: 1 }}>
-				<Stack>
-					<Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-					<Stack.Screen
-						name="modal"
-						options={{ title: "Modal", presentation: "modal" }}
-					/>
-				</Stack>
-			</GestureHandlerRootView>
+			<Animated.View
+				style={{ flex: 1, position: "relative" }}
+				entering={FadeIn.duration(300)}
+			>
+				<GestureHandlerRootView style={{ flex: 1 }}>
+					<Stack>
+						<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+						<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+						<Stack.Screen name="+not-found" />
+					</Stack>
+				</GestureHandlerRootView>{" "}
+			</Animated.View>
 		</ThemeProvider>
 	);
 }

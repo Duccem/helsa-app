@@ -76,16 +76,6 @@
   "terminal.integrated.cwd": "${workspaceFolder}",
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   
-  // Emmet settings
-  "emmet.includeLanguages": {
-    "typescript": "html",
-    "typescriptreact": "html",
-    "javascript": "html",
-    "javascriptreact": "html"
-  },
-  
-  // React Native / Expo specific
-  "react-native.packager.port": 8081,
   
   // Extension specific settings
   "eslint.enable": false,

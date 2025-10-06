@@ -40,13 +40,7 @@
 				"useExhaustiveDependencies": "info"
 			},
 			"nursery": {
-				"useSortedClasses": {
-					"level": "warn",
-					"fix": "safe",
-					"options": {
-						"functions": ["clsx", "cva", "cn"]
-					}
-				}
+				"useSortedClasses": "off"
 			},
 			"style": {
 				"noParameterAssign": "error",
