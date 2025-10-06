@@ -7,33 +7,49 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "../global.css";
-import React, { useRef } from "react";
-import { Platform } from "react-native";
+import { useFonts } from "expo-font";
+import { useEffect, useState } from "react";
 import Animated, { FadeIn } from "react-native-reanimated";
+import { AnimationScreen } from "@/components/animation-screen";
 import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
 import { useColorScheme } from "@/lib/use-color-scheme";
 
 export const unstable_settings = {
-	initialRouteName: "(drawer)",
+	initialRouteName: "(tabs)",
 };
 
 export default function RootLayout() {
-	const hasMounted = useRef(false);
-	const { colorScheme, isDarkColorScheme } = useColorScheme();
-	const [isColorSchemeLoaded, setIsColorSchemeLoaded] = React.useState(false);
+	const [appReady, setAppReady] = useState(false);
+	const { isDarkColorScheme, colorScheme, loadTHeme } = useColorScheme();
+	const [loaded] = useFonts({
+		Nunito: require("@/assets/fonts/Nunito-Regular.ttf"),
+	});
 
-	useIsomorphicLayoutEffect(() => {
-		if (hasMounted.current) {
-			return;
-		}
-
-		setAndroidNavigationBar(colorScheme);
-		setIsColorSchemeLoaded(true);
-		hasMounted.current = true;
+	useEffect(() => {
+		const prepare = async () => {
+			try {
+				await loadTHeme();
+			} catch (e) {
+				console.error(e);
+			}
+		};
+		prepare();
 	}, []);
 
-	if (!isColorSchemeLoaded) {
-		return null;
+	useEffect(() => {
+		if (loaded) {
+			setAndroidNavigationBar(colorScheme);
+			setAppReady(true);
+		}
+	}, [loaded]);
+
+	if (!appReady || !loaded) {
+		return (
+			<AnimationScreen
+				appReady={appReady}
+				finish={(_isCanceled: boolean) => {}}
+			/>
+		);
 	}
 	return (
 		<ThemeProvider value={isDarkColorScheme ? DarkTheme : DefaultTheme}>
@@ -53,8 +69,3 @@ export default function RootLayout() {
 		</ThemeProvider>
 	);
 }
-
-const useIsomorphicLayoutEffect =
-	Platform.OS === "web" && typeof window === "undefined"
-		? React.useEffect
-		: React.useLayoutEffect;
