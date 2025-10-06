@@ -1,0 +1,41 @@
+# Knowledge
+
+## Assessments
+
+- Registro de pensamientos
+- Cuestionario de la salud del paciente (PHQ-9)
+- Inventario de ansiedad de Beck (BAI)
+- Escala de estrés percibido (PSS)
+- Escala de bienestar psicológico (PWB)
+- Escala de resiliencia de Connor-Davidson (CD-RISC)
+- Escala de satisfacción con la vida (SWLS)
+- Escala de autoeficacia general (GSE)
+- Escala de apoyo social percibido (PSSS)
+- Escala de mindfulness de Freiburg (FMI)
+- Escala de afrontamiento de Carver (COPE)
+- Escala de gratitud de McCullough (GQ-6)
+- Escala de optimismo de Scheier y Carver (LOT-R)
+- Escala de autoestima de Rosenberg (RSES)
+- Escala de calidad de vida (WHOQOL-BREF)
+- Escala de síntomas somáticos (PHQ-15)
+- Escala de funcionamiento social (SFS)
+- Escala de habilidades sociales (SSRS)
+- Escala de inteligencia emocional (EQ-i)
+- Escala de locus de control (LOC)
+- Escala de auto-compasión (SCS)
+- Escala de auto-regulación (SRS)
+- Escala de auto-concepto (ACS)
+- Escala de auto-motivación (AMS)
+- Escala de auto-determinación (SDT)
+- Escala de auto-eficacia académica (ASE)
+- Escala de auto-eficacia laboral (WSE)
+- Escala de auto-eficacia para la salud (HSE)
+- Escala de auto-eficacia para el manejo del estrés (SSE)
+- Escala de auto-eficacia para la resolución de problemas (PSE)
+- Escala de auto-eficacia para la comunicación (CSE)
+- Escala de auto-eficacia para la toma de decisiones (DSE)
+- Escala de auto-eficacia para la gestión del tiempo (TSE)
+- Escala de auto-eficacia para la gestión del cambio (CSE)
+- Escala de auto-eficacia para la gestión de conflictos (CSE)
+- Smart goals
+- Rueda de la vida de meyer 

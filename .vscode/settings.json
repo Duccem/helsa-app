@@ -110,5 +110,8 @@
   
   // Word wrap
   "editor.wordWrap": "on",
+  "cSpell.words": [
+    "qstash"
+  ],
   
 }

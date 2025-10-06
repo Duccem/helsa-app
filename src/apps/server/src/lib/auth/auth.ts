@@ -9,9 +9,11 @@ import {
 import { type BetterAuthOptions, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { bearer } from "better-auth/plugins";
-import { db } from "./db/index";
-import * as schema from "./db/schema/auth";
-import { polarClient } from "./payments";
+import { headers } from "next/headers";
+import { cache } from "react";
+import { db } from "../db/index";
+import * as schema from "../db/schema/auth";
+import { polarClient } from "../payments";
 
 export const auth = betterAuth<BetterAuthOptions>({
 	database: drizzleAdapter(db, {
@@ -77,4 +79,13 @@ export const auth = betterAuth<BetterAuthOptions>({
 		expo(),
 		bearer(),
 	],
+});
+
+export type BetterSession = typeof auth.$Infer.Session;
+export type BetterUser = typeof auth.$Infer.Session.user;
+
+export const getSession = cache(async (): Promise<BetterSession | null> => {
+	return await auth.api.getSession({
+		headers: await headers(),
+	});
 });

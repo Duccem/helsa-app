@@ -1,6 +1,7 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
 	boolean,
+	jsonb,
 	pgEnum,
 	pgTable,
 	text,
@@ -9,7 +10,6 @@ import {
 } from "drizzle-orm/pg-core";
 import { v7 } from "uuid";
 import { user } from "./auth";
-import { therapist } from "./therapist";
 
 export const patient_gender = pgEnum("patient_gender", [
 	"MAN",
@@ -60,7 +60,7 @@ export const sleep = pgTable("sleep", {
 	date: timestamp("date").notNull().defaultNow(),
 });
 
-export const journal_entry = pgTable("journal_entry", {
+export const journal = pgTable("journal_entry", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
 	patientId: uuid("patient_id")
 		.notNull()
@@ -69,7 +69,7 @@ export const journal_entry = pgTable("journal_entry", {
 	date: timestamp("date").notNull().defaultNow(),
 });
 
-export const objective = pgTable("objective", {
+export const goal = pgTable("goal", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
 	patientId: uuid("patient_id")
 		.notNull()
@@ -86,9 +86,9 @@ export const objective = pgTable("objective", {
 
 export const milestone = pgTable("milestone", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
-	objectiveId: uuid("objective_id")
+	goalId: uuid("goal_id")
 		.notNull()
-		.references(() => objective.id),
+		.references(() => goal.id),
 	title: text("title").notNull(),
 	description: text("description"),
 	isCompleted: boolean("is_completed").default(false),
@@ -99,13 +99,24 @@ export const milestone = pgTable("milestone", {
 		.$onUpdate(() => new Date()),
 });
 
+export const goalRelations = relations(goal, ({ many }) => ({
+	milestones: many(milestone),
+}));
+
+export const milestoneRelations = relations(milestone, ({ one }) => ({
+	goal: one(goal, {
+		fields: [milestone.goalId],
+		references: [goal.id],
+	}),
+}));
+
 export const medication = pgTable("medication", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
 	patientId: uuid("patient_id")
 		.notNull()
 		.references(() => patient.id),
 	name: text("name").notNull(),
-	isActive: boolean("is_active").default(false),
+	isActive: boolean("is_active").default(true),
 	dosage: text("dosage").notNull(),
 	frequency: text("frequency").notNull(),
 	startDate: timestamp("start_date").notNull(),
@@ -118,22 +129,34 @@ export const medication = pgTable("medication", {
 		.$onUpdate(() => new Date()),
 });
 
-export const therapy = pgTable("therapy", {
+export const medication_reminder = pgTable("medication_reminder", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
+	medicationId: uuid("medication_id")
+		.notNull()
+		.references(() => medication.id),
 	patientId: uuid("patient_id")
 		.notNull()
 		.references(() => patient.id),
-	therapistId: uuid("therapist_id")
-		.notNull()
-		.references(() => therapist.id),
-	name: text("name").notNull(),
-	description: text("description"),
-	objective: text("objective").notNull(),
-	startDate: timestamp("start_date").notNull(),
-	endDate: timestamp("end_date"),
+	scheduledTime: timestamp("scheduled_time").notNull(),
+	isTaken: boolean("is_taken").default(false),
+	forgotten: boolean("forgotten").default(false),
+	takenAt: timestamp("taken_at"),
 	createdAt: timestamp("created_at").notNull().defaultNow(),
 	updatedAt: timestamp("updated_at")
 		.notNull()
 		.defaultNow()
 		.$onUpdate(() => new Date()),
+});
+
+export const assessment = pgTable("assessment", {
+	id: uuid("id").primaryKey().$defaultFn(v7),
+	patientId: uuid("patient_id")
+		.notNull()
+		.references(() => patient.id),
+	type: text("type").notNull(),
+	mode: text("mode").notNull(),
+	completed: boolean("completed").default(false),
+	questions: jsonb("questions").notNull(),
+	date: timestamp("date").notNull().defaultNow(),
+	notes: text("notes"),
 });
