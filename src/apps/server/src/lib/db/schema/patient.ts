@@ -148,7 +148,8 @@ export const medication_reminder = pgTable("medication_reminder", {
 		.$onUpdate(() => new Date()),
 });
 
-export const assessment = pgTable("assessment", {
+// Renamed from assessment -> test (table assessment -> test) see migration 0000_rename_assessment_to_test.sql
+export const test = pgTable("test", {
 	id: uuid("id").primaryKey().$defaultFn(v7),
 	patientId: uuid("patient_id")
 		.notNull()
@@ -159,4 +160,43 @@ export const assessment = pgTable("assessment", {
 	questions: jsonb("questions").notNull(),
 	date: timestamp("date").notNull().defaultNow(),
 	notes: text("notes"),
+});
+
+// Temporary alias to avoid breaking imports; remove after refactor completes elsewhere.
+export const assessment = test;
+
+// Activity: suggestions generated from user inputs (mood, sleep, journal, etc.)
+export const activity_category = pgEnum("activity_category", [
+	"MINDFULNESS",
+	"EXERCISE",
+	"SLEEP",
+	"NUTRITION",
+	"SOCIAL",
+	"GENERAL",
+]);
+
+export const activity_status = pgEnum("activity_status", [
+	"SUGGESTED",
+	"ACCEPTED",
+	"COMPLETED",
+	"DISMISSED",
+]);
+
+export const activity = pgTable("activity", {
+	id: uuid("id").primaryKey().$defaultFn(v7),
+	patientId: uuid("patient_id")
+		.notNull()
+		.references(() => patient.id),
+	category: activity_category("category").notNull(),
+	title: text("title").notNull(),
+	description: text("description"),
+	status: activity_status("status").notNull().default("SUGGESTED"),
+	metadata: jsonb("metadata"),
+	scheduledAt: timestamp("scheduled_at"),
+	completedAt: timestamp("completed_at"),
+	createdAt: timestamp("created_at").notNull().defaultNow(),
+	updatedAt: timestamp("updated_at")
+		.notNull()
+		.defaultNow()
+		.$onUpdate(() => new Date()),
 });

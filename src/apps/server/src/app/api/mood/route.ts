@@ -21,6 +21,7 @@ export const POST = withAuth(
 				reasons: body.reasons,
 				date: body.date ? new Date(body.date) : new Date(),
 			});
+
 			return NextResponse.json({ success: true });
 		} catch (error) {
 			console.error("Error saving mood:", error);

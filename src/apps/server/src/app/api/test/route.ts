@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import z from "zod";
 import { withAuth } from "@/lib/auth/with-auth";
 import { db } from "@/lib/db";
-import { assessment } from "@/lib/db/schema/patient";
+import { test } from "@/lib/db/schema/patient";
 
 export const POST = withAuth(
 	async ({ body }) => {
-		await db.insert(assessment).values({
+		await db.insert(test).values({
 			patientId: body.patientId,
 			type: body.type,
 			mode: body.mode,
@@ -14,7 +14,7 @@ export const POST = withAuth(
 			questions: body.questions,
 			notes: body.notes,
 		});
-		return NextResponse.json({ message: "Assessment created" });
+		return NextResponse.json({ message: "Test created" });
 	},
 	{
 		bodySchema: z.object({

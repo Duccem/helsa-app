@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 import z from "zod";
 import { withAuth } from "@/lib/auth/with-auth";
 import { db } from "@/lib/db";
-import { assessment } from "@/lib/db/schema/patient";
+import { test } from "@/lib/db/schema/patient";
 
 export const PUT = withAuth(
 	async ({ body, params }) => {
 		await db
-			.update(assessment)
+			.update(test)
 			.set({
 				type: body.type,
 				mode: body.mode,
@@ -16,8 +16,8 @@ export const PUT = withAuth(
 				questions: body.questions,
 				notes: body.notes,
 			})
-			.where(eq(assessment.id, params.id));
-		return NextResponse.json({ message: "Update assessment" });
+			.where(eq(test.id, params.id));
+		return NextResponse.json({ message: "Update test" });
 	},
 	{
 		bodySchema: z.object({

@@ -3,6 +3,7 @@ import z from "zod";
 import { withAuth } from "@/lib/auth/with-auth";
 import { db } from "@/lib/db";
 import { patient } from "@/lib/db/schema/patient";
+import { qstashClient } from "@/lib/qstash";
 
 const createPatientSchema = z.object({
 	birthDate: z.string().refine((date) => !Number.isNaN(Date.parse(date)), {
@@ -14,7 +15,7 @@ const createPatientSchema = z.object({
 export const PUT = withAuth(
 	async ({ body, session }) => {
 		try {
-			await db
+			const inserted = await db
 				.insert(patient)
 				.values({
 					birthDate: new Date(body.birthDate),
@@ -28,8 +29,11 @@ export const PUT = withAuth(
 						gender: body.gender,
 						updatedAt: new Date(),
 					},
-				});
+				})
+				.returning();
+			const patientId = inserted[0].id;
 
+			await scheduleConfiguration(patientId);
 			return NextResponse.json({ message: "Patient Saved correctly" });
 		} catch (_error) {
 			return NextResponse.json(
@@ -40,3 +44,12 @@ export const PUT = withAuth(
 	},
 	{ bodySchema: createPatientSchema },
 );
+
+async function scheduleConfiguration(patientId: string) {
+	await qstashClient.schedules.create({
+		destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/activity/generate`,
+		scheduleId: `generate-activities-${patientId}`,
+		cron: "0 0 * * *", // Every day at midnight
+		body: JSON.stringify({ patientId: patientId }),
+	});
+}

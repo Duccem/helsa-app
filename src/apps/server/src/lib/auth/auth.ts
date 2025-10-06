@@ -6,7 +6,7 @@ import {
 	usage,
 	webhooks,
 } from "@polar-sh/better-auth";
-import { type BetterAuthOptions, betterAuth } from "better-auth";
+import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { bearer } from "better-auth/plugins";
 import { headers } from "next/headers";
@@ -15,7 +15,7 @@ import { db } from "../db/index";
 import * as schema from "../db/schema/auth";
 import { polarClient } from "../payments";
 
-export const auth = betterAuth<BetterAuthOptions>({
+export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
 

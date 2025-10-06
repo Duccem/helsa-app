@@ -1,6 +1,6 @@
 # Knowledge
 
-## Assessments
+## Tests
 
 - Registro de pensamientos
 - Cuestionario de la salud del paciente (PHQ-9)
