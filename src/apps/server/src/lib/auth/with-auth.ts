@@ -20,7 +20,7 @@ export type AuthenticatedHandlerOptions<P, B, Q> = {
 	paramsSchema?: ZodType<P>;
 };
 
-export const withAuth = async <P, B, Q>(
+export const withAuth = <P, B, Q>(
 	handler: AuthenticatedHandler<P, B, Q>,
 	options?: AuthenticatedHandlerOptions<P, B, Q>,
 	onError?: (error: AppError) => NextResponse,
