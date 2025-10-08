@@ -19,4 +19,8 @@ export const POST = async (req: NextRequest) => {
 	if (session.user.role === "PATIENT") {
 		return patientAgent(messages, session.user, chatId);
 	}
+	return NextResponse.json(
+		{ error: "Only patients can access this endpoint" },
+		{ status: 403 },
+	);
 };
