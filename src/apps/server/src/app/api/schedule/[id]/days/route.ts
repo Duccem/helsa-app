@@ -1,4 +1,3 @@
-import { Client } from "@upstash/qstash";
 import { and, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import z from "zod";
@@ -6,8 +5,7 @@ import { withAuth } from "@/lib/auth/with-auth";
 import { db } from "@/lib/db";
 import { schedule, schedule_day, therapist } from "@/lib/db/schema/therapist";
 import { AppError } from "@/lib/error";
-
-const qstash = new Client({ token: process.env.QSTASH_TOKEN ?? "" });
+import { qstashClient } from "@/lib/qstash";
 
 // Params: schedule id (uuid v7)
 const paramsSchema = z.object({ id: z.uuidv7() });
@@ -88,7 +86,7 @@ export const POST = withAuth(
 
 		const therapistId = await getTherapistId(id);
 
-		await qstash.publishJSON({
+		await qstashClient.publishJSON({
 			url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/schedule/availability`,
 			body: { therapistId },
 			delay: "5s",
