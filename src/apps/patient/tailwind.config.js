@@ -2,10 +2,7 @@ import { hairlineWidth } from "nativewind/theme";
 
 /** @type {import('tailwindcss').Config} */
 export const darkMode = "class";
-export const content = [
-	"./app/**/*.{js,ts,tsx}",
-	"./components/**/*.{js,ts,tsx}",
-];
+export const content = ["./src/**/*.{js,ts,tsx}"];
 export const presets = [require("nativewind/preset")];
 export const theme = {
 	extend: {
@@ -40,6 +37,10 @@ export const theme = {
 				DEFAULT: "hsl(var(--destructive))",
 				foreground: "hsl(var(--destructive-foreground))",
 			},
+			brand: {
+				DEFAULT: "var(--main-color)",
+				foreground: "hsl(var(--foreground))",
+			},
 			border: "hsl(var(--border))",
 			input: "hsl(var(--input))",
 			ring: "hsl(var(--ring))",
@@ -53,6 +54,9 @@ export const theme = {
 		},
 		borderWidth: {
 			hairline: hairlineWidth(),
+		},
+		fontFamily: {
+			nunito: ["Nunito", "sans-serif"],
 		},
 	},
 };

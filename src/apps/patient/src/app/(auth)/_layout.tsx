@@ -1,5 +1,5 @@
 import { Redirect, Stack } from "expo-router";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/auth-client";
 
 const Layout = () => {
 	const { data: session, isPending } = authClient.useSession();

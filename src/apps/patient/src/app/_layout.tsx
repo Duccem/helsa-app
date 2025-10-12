@@ -6,13 +6,13 @@ import {
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import "../global.css";
+import "../../global.css";
 import { useFonts } from "expo-font";
 import { useEffect, useState } from "react";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { AnimationScreen } from "@/components/animation-screen";
-import { setAndroidNavigationBar } from "@/lib/android-navigation-bar";
 import { useColorScheme } from "@/lib/use-color-scheme";
+import LanguageProvider from "@/lib/translation/language-provider";
 
 export const unstable_settings = {
 	initialRouteName: "(tabs)",
@@ -20,9 +20,9 @@ export const unstable_settings = {
 
 export default function RootLayout() {
 	const [appReady, setAppReady] = useState(false);
-	const { isDarkColorScheme, colorScheme, loadTHeme } = useColorScheme();
+	const { isDarkColorScheme, loadTHeme } = useColorScheme();
 	const [loaded] = useFonts({
-		Nunito: require("@/assets/fonts/Nunito-Regular.ttf"),
+		Nunito: require("../assets/fonts/nunito.ttf"),
 	});
 
 	useEffect(() => {
@@ -38,7 +38,6 @@ export default function RootLayout() {
 
 	useEffect(() => {
 		if (loaded) {
-			setAndroidNavigationBar(colorScheme);
 			setAppReady(true);
 		}
 	}, [loaded]);
@@ -59,12 +58,14 @@ export default function RootLayout() {
 				entering={FadeIn.duration(300)}
 			>
 				<GestureHandlerRootView style={{ flex: 1 }}>
-					<Stack>
-						<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-						<Stack.Screen name="(auth)" options={{ headerShown: false }} />
-						<Stack.Screen name="+not-found" />
-					</Stack>
-				</GestureHandlerRootView>{" "}
+					<LanguageProvider>
+						<Stack>
+							<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+							<Stack.Screen name="(auth)" options={{ headerShown: false }} />
+							<Stack.Screen name="+not-found" />
+						</Stack>
+					</LanguageProvider>
+				</GestureHandlerRootView>
 			</Animated.View>
 		</ThemeProvider>
 	);
