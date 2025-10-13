@@ -24,7 +24,7 @@ function useVariantStyles(isDark: boolean): Record<VariantKey, VariantStyle> {
 		return {
 			primary: {
 				backgroundColor: "#8167ec",
-				activeBackgroundColor: "#15803d",
+				activeBackgroundColor: "#dfcbfa",
 				borderColor: "#8167ec",
 			},
 			outline: {
@@ -51,7 +51,7 @@ function useVariantStyles(isDark: boolean): Record<VariantKey, VariantStyle> {
 	return {
 		primary: {
 			backgroundColor: "#8167ec",
-			activeBackgroundColor: "#15803d",
+			activeBackgroundColor: "#dfcbfa",
 			borderColor: "#8167ec",
 		},
 		outline: {

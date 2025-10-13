@@ -1,13 +1,21 @@
-import { ActivityIndicator, Alert, Image, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { Container } from "@/components/container";
-import { t } from "@/lib/translation";
+import * as Haptics from "expo-haptics";
 import { router } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
-import * as Haptics from "expo-haptics";
 import { useState } from "react";
-import { useLogin } from "@/lib/auth/use-login";
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Container } from "@/components/container";
 import Button from "@/components/ui/button";
+import { useLogin } from "@/lib/auth/use-login";
 import { useOauth } from "@/lib/auth/use-oauth";
+import { t } from "@/lib/translation";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -35,10 +43,16 @@ const SignIn = () => {
           </TouchableOpacity>
         </View>
         <View className="mt-8 gap-4 w-full ">
-          <Text className="text-2xl font-bold text-center">{t("auth.signIn.title")}</Text>
-          <Text className="text-gray-600 text-center">{t("auth.signIn.subtitle")}</Text>
+          <Text className="text-2xl font-bold text-center">
+            {t("auth.signIn.title")}
+          </Text>
+          <Text className="text-gray-600 text-center">
+            {t("auth.signIn.subtitle")}
+          </Text>
           <View className="gap-2">
-            <Text className="text-sm text-gray-700">{t("auth.signIn.emailLabel")}</Text>
+            <Text className="text-sm text-gray-700">
+              {t("auth.signIn.emailLabel")}
+            </Text>
             <TextInput
               className="bg-white border rounded-xl px-4 py-3"
               placeholder={t("auth.signIn.emailPlaceholder")}
@@ -50,7 +64,9 @@ const SignIn = () => {
             />
           </View>
           <View className="gap-2">
-            <Text className="text-sm text-gray-700">{t("auth.signIn.passwordLabel")}</Text>
+            <Text className="text-sm text-gray-700">
+              {t("auth.signIn.passwordLabel")}
+            </Text>
             <TextInput
               className="bg-white border rounded-xl px-4 py-3"
               placeholder={t("auth.signIn.passwordPlaceholder")}
@@ -59,19 +75,39 @@ const SignIn = () => {
               onChangeText={setPassword}
               editable={!loading}
             />
+            <TouchableOpacity
+              onPress={() => router.push('/(auth)/forget-password')}
+            >
+              <Text className="underline">Forget password?</Text>
+            </TouchableOpacity>
           </View>
-          <Button action={() => {
-            try {
-              signIn(email, password)
-            } catch (error) {
-              Alert.alert("Sign in error", (error as Error).message);
-            }
-          }} disabled={loading} className="w-full" styles={{ paddingVertical: 10 }}>
+          <Button
+            action={() => {
+              try {
+                signIn(email, password);
+              } catch (error) {
+                Alert.alert("Sign in error", (error as Error).message);
+              }
+            }}
+            disabled={loading}
+            className="w-full"
+            styles={{ paddingVertical: 10 }}
+          >
             <Text className="text-white font-semibold">
-              {loading ? <ActivityIndicator color={"white"} /> : t("auth.signIn.signInButton")}
+              {loading ? (
+                <ActivityIndicator color={"white"} />
+              ) : (
+                t("auth.signIn.signInButton")
+              )}
             </Text>
           </Button>
-          <Button variant="outline" action={() => signInWithGoogle()} disabled={loadingOauth} className="w-full flex-row justify-center items-center gap-2" styles={{ paddingVertical: 10, width: '100%' }}>
+          <Button
+            variant="outline"
+            action={() => signInWithGoogle()}
+            disabled={loadingOauth}
+            className="w-full flex-row justify-center items-center gap-2"
+            styles={{ paddingVertical: 10, width: "100%" }}
+          >
             {loadingOauth ? (
               <ActivityIndicator color={"white"} />
             ) : (
@@ -86,9 +122,11 @@ const SignIn = () => {
             </Text>
           </Button>
           <View className="flex-row gap-2 justify-center mt-2">
-            <Text className="text-gray-700">{t("auth.signIn.dontHaveAccount")}</Text>
+            <Text className="text-gray-700">
+              {t("auth.signIn.dontHaveAccount")}
+            </Text>
             <TouchableOpacity
-              onPress={() => router.push("/(auth)/sign-up" as any)}
+              onPress={() => router.push("/(auth)/sign-up")}
             >
               <Text className="text-blue-600 font-semibold">
                 {t("auth.signIn.goToSignUp")}
@@ -100,6 +138,5 @@ const SignIn = () => {
     </Container>
   );
 };
-
 
 export default SignIn;

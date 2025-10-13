@@ -8,17 +8,17 @@ import {
 } from "@polar-sh/better-auth";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { bearer } from "better-auth/plugins";
+import { bearer, emailOTP } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { cache } from "react";
 import { db } from "../db/index";
 import * as schema from "../db/schema/auth";
+import { sendForgetPasswordEmail } from "../email";
 import { polarClient } from "../payments";
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: "pg",
-
 		schema: schema,
 	}),
 	user: {
@@ -75,6 +75,22 @@ export const auth = betterAuth({
 				}),
 				usage(),
 			],
+		}),
+		emailOTP({
+			otpLength: 6,
+			sendVerificationOTP: async ({ email, otp, type }) => {
+				switch (type) {
+					case "sign-in":
+						console.log(`Sign-in OTP for ${email}: ${otp}`);
+						break;
+					case "email-verification":
+						console.log(`Link OTP for ${email}: ${otp}`);
+						break;
+					case "forget-password":
+						await sendForgetPasswordEmail(email, otp);
+						break;
+				}
+			},
 		}),
 		expo(),
 		bearer(),

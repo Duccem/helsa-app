@@ -1,42 +1,65 @@
 const en = {
-  common: {
-    back: "Back",
-  },
-  welcome: {
-    title: "Welcome to Helsa",
-    subtitle: "Your journey to better mental health starts here.",
-    getStarted: "Get Started",
-  },
-  auth: {
-    signIn: {
-      title: "Sign In",
-      subtitle: "Welcome back! Please sign in to continue.",
-      emailPlaceholder: "Email Address",
-      passwordPlaceholder: "Password",
-      emailLabel: "Email",
-      passwordLabel: "Password",
-      signInButton: "Sign In",
-      oauthSignInButton: "Continue with Google",
-      dontHaveAccount: "Don't have an account?",
-      goToSignUp: "Sign Up",
-    },
-    signUp: {
-      title: "Create Account",
-      subtitle: "Join us today! Create your account to get started.",
-      namePlaceholder: "Full Name",
-      emailPlaceholder: "Email Address",
-      passwordPlaceholder: "Password",
-      confirmPasswordPlaceholder: "Confirm Password",
-      nameLabel: "Name",
-      emailLabel: "Email",
-      passwordLabel: "Password",
-      confirmPasswordLabel: "Confirm Password",
-      signUpButton: "Sign Up",
-      oauthSignUpButton: "Continue with Google",
-      alreadyHaveAccount: "Already have an account?",
-      goToSignIn: "Sign In",
-    }
-  }
-}
+	common: {
+		back: "Back",
+	},
+	welcome: {
+		title: "Welcome to Helsa",
+		subtitle: "Your journey to better mental health starts here.",
+		getStarted: "Get Started",
+	},
+	auth: {
+		signIn: {
+			title: "Sign In",
+			subtitle: "Welcome back! Please sign in to continue.",
+			emailPlaceholder: "Email Address",
+			passwordPlaceholder: "Password",
+			emailLabel: "Email",
+			passwordLabel: "Password",
+			signInButton: "Sign In",
+			oauthSignInButton: "Continue with Google",
+			dontHaveAccount: "Don't have an account?",
+			goToSignUp: "Sign Up",
+		},
+		signUp: {
+			title: "Create Account",
+			subtitle: "Join us today! Create your account to get started.",
+			namePlaceholder: "Full Name",
+			emailPlaceholder: "Email Address",
+			passwordPlaceholder: "Password",
+			confirmPasswordPlaceholder: "Confirm Password",
+			nameLabel: "Name",
+			emailLabel: "Email",
+			passwordLabel: "Password",
+			confirmPasswordLabel: "Confirm Password",
+			signUpButton: "Sign Up",
+			oauthSignUpButton: "Continue with Google",
+			alreadyHaveAccount: "Already have an account?",
+			goToSignIn: "Sign In",
+		},
+		forgetPassword: {
+			title: "Reset Password",
+			subtitle: "Enter your email to receive password reset instructions.",
+			emailPlaceholder: "Email Address",
+			emailLabel: "Email",
+			sendInstructionsButton: "Send Instructions",
+			backToSignIn: "Back to Sign In",
+		},
+		checkEmail: {
+			title: "Check Your Email",
+			subtitle: "We have sent an otp code to your email address.",
+			verifyButton: "Verify",
+			resendEmailButton: "Resend Email",
+			backToSignIn: "Back to Sign In",
+		},
+		changePassword: {
+			title: "Change Password",
+			subtitle: "Create a new password for your account.",
+			newPasswordPlaceholder: "New Password",
+			newPasswordLabel: "New Password",
+			changePasswordButton: "Change Password",
+			backToSignIn: "Back to Sign In",
+		},
+	},
+};
 
 export default en;
